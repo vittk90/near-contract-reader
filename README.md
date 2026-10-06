@@ -5,10 +5,14 @@ call interface from its on-chain history.
 
 ## The problem
 
-NEAR contracts publish no ABI. To call `ft_transfer` on an unfamiliar contract you need to
-know it expects `receiver_id`, `amount` and an optional `memo` — and nothing on chain tells
-you that. You end up reading Rust source, if it is even published, or guessing and burning
-gas on failed calls.
+Most NEAR contracts publish no ABI. Of 48 widely used mainnet contracts checked on
+6 Oct 2026 for an embedded one (the `__contract_abi` view method), 9 had it; among those
+without are `v2.ref-finance.near`, `wrap.near`, `usdt.tether-token.near` and
+`meta-pool.near`. It is a hand-picked sample, not a census.
+
+To call `ft_transfer` on such a contract you need to know it expects `receiver_id`,
+`amount` and an optional `memo` — and nothing on chain tells you that. You end up reading
+Rust source, if it is even published, or guessing and burning gas on failed calls.
 
 The one public record of a contract's real interface is what other callers have already
 sent. This skill reads that.
